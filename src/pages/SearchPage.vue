@@ -24,26 +24,12 @@
       v-model:main-active-index="activeIndex"
       :items="tagList"
   />
-  <div style="padding: 16px">
-    <van-button block type="primary" @click="doSearchResult">搜索</van-button>
-  </div>
-
 </template>
 
 <script setup>
 import { ref } from 'vue';
-const searchText = ref('');
-import {useRouter} from "vue-router";
 
-const router = useRouter();
-const doSearchResult = () => {
-  router.push({
-    path: '/user/list',
-    query: {
-      tags: activeIds.value
-    }
-  })
-}
+const searchText = ref('');
 
 const originTagList = [{
   text: '性别',
@@ -58,8 +44,8 @@ const originTagList = [{
     { text: '大二', id: '大二' },
     { text: '大三', id: '大三' },
     { text: '大四', id: '大四' },
-    { text: '研一', id: '研一' },
-    { text: '研二', id: '研二' },
+    { text: '大五', id: '大五' },
+    { text: '大六', id: '大六' },
   ],
 },
 ];
