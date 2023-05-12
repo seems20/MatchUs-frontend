@@ -17,8 +17,13 @@
 </template>
 
 <script setup >
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useRoute} from "vue-router";
+import {Toast} from "vant";
+
+import myAxios from "../plugins/myAxios.ts";
+
+import qs from 'qs'
 
 const route = useRoute();
 const {tags} = route.query;
@@ -38,6 +43,38 @@ const mockUser = ref({
 })
 
 const userList = ref({mockUser});
+
+
+onMounted( () =>{
+  // 为给定 ID 的 user 创建请求
+  myAxios.get('/user/search/tags',{
+    withCredentials: false,
+    params: {
+      tagNameList: tags
+    },
+    //用鱼皮的这个我的头像不会显示。
+    // paramsSerializer: params =>{
+    //   return qs.stringify(params,{indices: false})
+    // }
+
+    //序列化
+    paramsSerializer: {
+      serialize: params => qs.stringify(params, { indices: false}),
+    }
+
+  })
+      .then(function (response) {
+        console.log('/user/search/tags succeed',response);
+        Toast.success('请求成功');
+      })
+      .catch(function (error) {
+        console.log('/user/search/tags error',error);
+        Toast.fail('请求失败');
+      });
+
+})
+
+
 
 </script>
 
